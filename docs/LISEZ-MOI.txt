@@ -1,0 +1,44 @@
+DOUBAJ AI – Version portable pour Windows 10 / 11 (64 bits)
+Réalisé par Doubaj Ahmed – Professeur de technologie industrielle
+Tous droits réservés : Doubaj Ahmed – DOUBAJ AHMED
+==============================================================
+
+DÉMARRAGE
+1. Décompressez « DOUBAJ AI PORTABLE.zip » où vous voulez (bureau, clé USB…).
+2. Double-cliquez sur « DOUBAJ AI.exe ». Aucune installation, aucun Python n'est nécessaire.
+   (Au premier lancement, Windows SmartScreen peut afficher « Windows a protégé votre ordinateur » :
+    cliquez sur « Informations complémentaires » puis « Exécuter quand même ». L'exécutable n'est pas signé.)
+3. Cliquez sur COMMENCER, puis ouvrez Paramètres → Fournisseurs IA.
+
+MODE EN LIGNE (API)
+- Anthropic Claude : clé sur console.anthropic.com
+- OpenAI : clé sur platform.openai.com
+- Google Gemini : clé gratuite sur aistudio.google.com
+- Autre service compatible OpenAI (OpenRouter, Groq, Mistral, DeepSeek…) : onglet « OpenAI-compatible (custom) »
+Collez la clé, cliquez « Tester la connexion », puis Enregistrer. Ces services peuvent être payants selon le fournisseur.
+
+MODE HORS LIGNE (modèle local)
+- Installez Ollama (ollama.com), puis dans Paramètres → Modèles locaux, téléchargez par ex. « qwen2.5:7b »
+  (≈ 4,7 Go, ≈ 6 Go de RAM). Choisissez ensuite le fournisseur « Ollama » dans la barre du haut.
+- Vous pouvez aussi importer un fichier .gguf, ou utiliser un serveur llama.cpp / LM Studio.
+- La qualité dépend de la taille du modèle et de la puissance du PC.
+
+DONNÉES
+Toutes vos conversations, projets, mémoires et fichiers créés sont enregistrés dans le dossier « data »
+à côté de l'application. Pour sauvegarder ou déplacer vos données, copiez ce dossier.
+Les clés API sont chiffrées pour votre compte Windows (DPAPI) : sur un autre PC, il faudra les saisir à nouveau.
+
+==============================================================
+DOUBAJ AI – النسخة المحمولة لنظام Windows 10 / 11
+من إعداد دباج أحمد – أستاذ مادة التكنولوجيا الصناعية
+
+التشغيل
+1. فك ضغط الملف « DOUBAJ AI PORTABLE.zip » في أي مكان (سطح المكتب، مفتاح USB…).
+2. انقر مرتين على « DOUBAJ AI.exe ». لا حاجة للتثبيت ولا لـ Python.
+   (قد يظهر تنبيه Windows SmartScreen في أول تشغيل: اختر « معلومات إضافية » ثم « تشغيل على أي حال ».)
+3. انقر على COMMENCER ثم افتح الإعدادات ← مزودو الذكاء الاصطناعي وأدخل مفتاح API.
+
+العمل دون إنترنت: ثبّت Ollama من ollama.com ثم حمّل نموذجاً من الإعدادات ← النماذج المحلية،
+واختر المزود « Ollama » من الشريط العلوي.
+
+جميع المحادثات والمشاريع والملفات تُحفظ محلياً في مجلد « data » بجانب البرنامج.

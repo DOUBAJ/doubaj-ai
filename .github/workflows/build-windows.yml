@@ -1,0 +1,65 @@
+name: Build DOUBAJ AI (Windows portable)
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Core tests (providers via mock servers, documents, storage)
+        env:
+          QT_QPA_PLATFORM: offscreen
+          PYTHONIOENCODING: utf-8
+        run: |
+          cd tests
+          python test_core.py
+
+      - name: Generate icon
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python build/make_icon.py
+
+      - name: Build EXE with PyInstaller
+        run: pyinstaller build/doubaj.spec --noconfirm --clean
+
+      - name: Smoke test the EXE (sandbox entry point)
+        shell: pwsh
+        run: |
+          Set-Content -Path smoke.py -Value 'import docx, pptx, openpyxl; print("SMOKE-OK")' -Encoding utf8
+          $p = Start-Process -FilePath "dist/DOUBAJ AI/DOUBAJ AI.exe" -ArgumentList "--run-python", "$PWD/smoke.py" -RedirectStandardOutput out.txt -Wait -PassThru -NoNewWindow
+          Get-Content out.txt
+          if (-not (Select-String -Path out.txt -Pattern "SMOKE-OK")) { Write-Error "EXE smoke test failed" }
+
+      - name: Package "DOUBAJ AI PORTABLE.zip"
+        run: python build/package.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DOUBAJ AI PORTABLE
+          path: dist/DOUBAJ AI PORTABLE.zip
+          retention-days: 30
+
+      - name: Publish release (on tags)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/DOUBAJ AI PORTABLE.zip

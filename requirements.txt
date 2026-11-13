@@ -1,0 +1,17 @@
+PySide6>=6.7
+anthropic>=0.70
+openai>=1.50
+httpx>=0.27
+python-docx>=1.1
+python-pptx>=1.0
+openpyxl>=3.1
+xlrd>=2.0
+pypdf>=4.0
+pypdfium2>=4.30
+Pillow>=10.0
+markdown>=3.6
+pygments>=2.17
+beautifulsoup4>=4.12
+qtawesome>=1.3
+psutil>=5.9
+pywin32>=306; sys_platform == "win32"
