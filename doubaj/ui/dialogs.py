@@ -81,8 +81,14 @@ class ProviderPage(QWidget):
         cur = self.model.currentText()
         self.model.clear()
         self.model.addItems(models)
-        self.model.setCurrentText(cur if cur else (models[0] if models else ""))
-        self.result.setText(f"{len(models)} modèles")
+        if models and cur not in models:
+            # the saved model no longer exists: pick a sensible available one
+            pref = [m for m in models if "flash" in m and "latest" in m] or [m for m in models if "flash" in m] or models
+            cur = pref[0]
+            self.result.setText(f"{len(models)} modèles – « {cur} » sélectionné (l'ancien modèle n'existe plus)")
+        else:
+            self.result.setText(f"{len(models)} modèles")
+        self.model.setCurrentText(cur)
 
     def test(self):
         self.result.setText("…")
