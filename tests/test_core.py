@@ -20,6 +20,8 @@ from doubaj.storage.db import Database  # noqa: E402
 from doubaj.core.settings import Settings  # noqa: E402
 
 app = QApplication.instance() or QApplication(sys.argv)
+from doubaj.ui.fonts import load_fonts  # noqa: E402
+load_fonts()  # bundled Amiri font (the offscreen platform has no system fonts on Windows CI)
 srv = mock_server.start(8765)
 OUT = Path(tempfile.mkdtemp())
 ok = 0
