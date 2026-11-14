@@ -81,7 +81,8 @@ class OpenAICompatProvider(Provider):
         except openai.AuthenticationError:
             yield StreamEvent("error", f"Invalid API key for {self.info.label} (401).")
         except openai.NotFoundError as e:
-            yield StreamEvent("error", f"Model or endpoint not found ({req.model}): {e.message}")
+            yield StreamEvent("error", f"Model or endpoint not found ({req.model}): {e.message}\n"
+                                       "→ Paramètres → « Actualiser les modèles » puis choisissez un modèle de la liste.")
         except openai.RateLimitError:
             yield StreamEvent("error", "Rate limit / quota reached (429).")
         except openai.APIStatusError as e:
@@ -96,13 +97,13 @@ class GeminiProvider(OpenAICompatProvider):
     info = ProviderInfo(
         id="gemini", label="Google Gemini", needs_key=True,
         default_base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-        default_model="gemini-2.5-flash",
-        suggested_models=["gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.5-flash-lite"],
+        default_model="gemini-flash-latest",
+        suggested_models=["gemini-flash-latest", "gemini-pro-latest", "gemini-flash-lite-latest"],
         help="aistudio.google.com → Get API key",
     )
 
     def _is_reasoning_model(self, model: str) -> bool:
-        return "2.5" in model or "3" in model
+        return "lite" not in model
 
     def build_params(self, req):
         p = super().build_params(req)
